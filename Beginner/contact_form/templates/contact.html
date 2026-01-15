@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Contact</title>
+		<style>
+			:root {
+				--navy: #0b1f3a;
+				--navy-2: #123a6f;
+				--blue: #2b6cb0;
+				--bg: #f6f8fc;
+				--card: #ffffff;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--danger: #b91c1c;
+				--success: #166534;
+			}
+
+			* { box-sizing: border-box; }
+			body {
+				margin: 0;
+				font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+					"Segoe UI Emoji";
+				color: var(--text);
+				background: radial-gradient(1200px 700px at 15% 10%, rgba(18, 58, 111, 0.18), transparent 55%),
+					radial-gradient(900px 520px at 90% 20%, rgba(43, 108, 176, 0.18), transparent 60%),
+					var(--bg);
+				min-height: 100vh;
+			}
+
+			.wrap {
+				max-width: 980px;
+				margin: 0 auto;
+				padding: 48px 16px;
+			}
+
+			.header {
+				display: flex;
+				align-items: flex-start;
+				justify-content: space-between;
+				gap: 16px;
+				margin-bottom: 18px;
+			}
+
+			.brand {
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+			}
+			.logo {
+				width: 40px;
+				height: 40px;
+				border-radius: 12px;
+				background: linear-gradient(135deg, var(--navy), var(--blue));
+				box-shadow: 0 10px 26px rgba(11, 31, 58, 0.22);
+			}
+			.title {
+				margin: 0;
+				font-size: 22px;
+				letter-spacing: -0.02em;
+			}
+			.subtitle {
+				margin: 4px 0 0;
+				color: var(--muted);
+				font-size: 14px;
+			}
+
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 18px;
+				overflow: hidden;
+				box-shadow: 0 16px 46px rgba(2, 6, 23, 0.08);
+			}
+			.cardTop {
+				padding: 18px 18px 14px;
+				background: linear-gradient(135deg, rgba(11, 31, 58, 0.06), rgba(43, 108, 176, 0.08));
+				border-bottom: 1px solid var(--border);
+			}
+			.cardTop strong {
+				color: var(--navy);
+			}
+
+			.cardBody {
+				padding: 18px;
+			}
+
+			.grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 14px;
+			}
+			@media (min-width: 760px) {
+				.grid {
+					grid-template-columns: 1fr 1fr;
+				}
+				.span2 {
+					grid-column: span 2;
+				}
+			}
+
+			label {
+				display: block;
+				margin: 0 0 6px;
+				font-size: 13px;
+				color: var(--navy);
+				font-weight: 600;
+			}
+			input[type="text"],
+			input[type="email"],
+			textarea {
+				width: 100%;
+				padding: 12px 12px;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				outline: none;
+				background: #fff;
+				transition: border-color 120ms ease, box-shadow 120ms ease;
+				font-size: 14px;
+			}
+			textarea { min-height: 140px; resize: vertical; }
+			input:focus, textarea:focus {
+				border-color: rgba(43, 108, 176, 0.55);
+				box-shadow: 0 0 0 4px rgba(43, 108, 176, 0.16);
+			}
+
+			.help {
+				margin-top: 6px;
+				color: var(--muted);
+				font-size: 12px;
+			}
+
+			.error {
+				margin-top: 6px;
+				color: var(--danger);
+				font-size: 12px;
+				font-weight: 600;
+			}
+
+			.actions {
+				display: flex;
+				justify-content: flex-end;
+				gap: 10px;
+				margin-top: 10px;
+			}
+			button {
+				border: 0;
+				border-radius: 12px;
+				padding: 12px 14px;
+				font-weight: 700;
+				cursor: pointer;
+			}
+			.btnPrimary {
+				background: linear-gradient(135deg, var(--navy), var(--navy-2));
+				color: white;
+				box-shadow: 0 10px 24px rgba(11, 31, 58, 0.22);
+			}
+			.btnPrimary:hover {
+				filter: brightness(1.02);
+			}
+
+			.flash {
+				margin: 12px 0 0;
+				padding: 12px 12px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-size: 14px;
+			}
+			.flash.success {
+				border-color: rgba(22, 101, 52, 0.25);
+				background: rgba(22, 101, 52, 0.06);
+				color: var(--success);
+			}
+			.flash.error {
+				border-color: rgba(185, 28, 28, 0.25);
+				background: rgba(185, 28, 28, 0.06);
+				color: var(--danger);
+			}
+
+			.footer {
+				margin-top: 14px;
+				color: var(--muted);
+				font-size: 12px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header">
+				<div class="brand">
+					<div>
+						<h1 class="title">Contact Us</h1>
+						<p class="subtitle">Send a message and we’ll get back to you.</p>
+					</div>
+				</div>
+			</div>
+
+			{% with messages = get_flashed_messages(with_categories=True) %}
+				{% if messages %}
+					{% for category, msg in messages %}
+						<div class="flash {{ category }}">{{ msg }}</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
+			<div class="card" role="region" aria-label="Contact Form">
+				<div class="cardTop">
+					<strong>Tip:</strong> All fields are required.
+				</div>
+				<div class="cardBody">
+					<form method="POST" action="{{ url_for('contact_bp.submit_contact_form') }}" novalidate>
+						{{ form.hidden_tag() }}
+
+						<div class="grid">
+							<div>
+								<label for="fname">First name</label>
+								{{ form.fname(id='fname', placeholder='Jane') }}
+								{% if form.fname.errors %}
+									<div class="error">{{ form.fname.errors[0] }}</div>
+								{% endif %}
+							</div>
+
+							<div>
+								<label for="lname">Last name</label>
+								{{ form.lname(id='lname', placeholder='Doe') }}
+								{% if form.lname.errors %}
+									<div class="error">{{ form.lname.errors[0] }}</div>
+								{% endif %}
+							</div>
+
+							<div class="span2">
+								<label for="email">Email</label>
+								{{ form.email(id='email', type='email', placeholder='jane.doe@example.com') }}
+								<div class="help">We’ll only use this to reply.</div>
+								{% if form.email.errors %}
+									<div class="error">{{ form.email.errors[0] }}</div>
+								{% endif %}
+							</div>
+
+							<div class="span2">
+								<label for="subject">Subject</label>
+								{{ form.subject(id='subject', placeholder='How can we help?') }}
+								{% if form.subject.errors %}
+									<div class="error">{{ form.subject.errors[0] }}</div>
+								{% endif %}
+							</div>
+
+							<div class="span2">
+								<label for="message">Message</label>
+								{{ form.message(id='message', placeholder='Write your message...') }}
+								{% if form.message.errors %}
+									<div class="error">{{ form.message.errors[0] }}</div>
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="actions">
+							{{ form.submit(class_='btnPrimary') }}
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="footer">
+				Powered by Flask + WTForms
+			</div>
+		</div>
+	</body>
+</html>
