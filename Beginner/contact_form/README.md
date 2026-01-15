@@ -5,7 +5,7 @@ This project is designed to demonstrate how modern Flask applications handle use
 
 ---
 
-## Project Overview (For Recruiters)
+## Project Overview 
 
 This project showcases my understanding of:
 
