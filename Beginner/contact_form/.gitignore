@@ -1,9 +1,10 @@
 .env
+env/
 .env.local
 venv/
 .venv/
 __pycache__/
 *.pyc
 instance/
-.migrations/
+migrations/
 *.sqlite3
