@@ -150,5 +150,25 @@ contact_form/
 
 ---
 
+## Endpoints
+
+### Web (HTML)
+
+- `GET /` — Redirects to `/contact`
+- `GET,POST /contact` — Contact form page + submission
+
+### Test API (JSON)
+
+These routes are provided for quick testing (they write to the same database).
+
+- `POST /` — Health check (test blueprint)
+- `POST /test` — Submit a contact message (JSON/form)
+- `GET /messages` — List all saved contact messages
+- `GET /messages/<message_id>` — Retrieve a single message
+- `DELETE /messages/<message_id>` — Delete a single message
+- `DELETE /messages` — Delete all messages
+
+---
+
 ## Screenshots 
 ![alt text](screenshot.png)
