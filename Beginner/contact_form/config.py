@@ -19,6 +19,5 @@ def create_app():
     migrate.init_app(app, db)
 
     # Ensure model metadata is registered so migrations can detect tables.
-    from models import models  # noqa: F401
 
     return app

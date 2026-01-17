@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Todo List</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="min-h-screen bg-white text-slate-900">
+		<main class="mx-auto max-w-4xl px-4 py-10 sm:py-14">
+			<h1 class="text-center text-4xl font-semibold tracking-tight sm:text-5xl">
+				Todo List
+			</h1>
+
+			<div class="mt-10 border-t border-slate-200 pt-10">
+				<form method="POST" action="{{ url_for('todo_bp.post_todo') }}" class="mx-auto max-w-3xl">
+					{{ form.hidden_tag() }}
+					<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+						<div class="flex-1">
+							<label class="sr-only" for="title">Enter a new task</label>
+							<input
+								id="title"
+								name="title"
+								type="text"
+								placeholder="Enter a new task"
+								value="{{ form.title.data or '' }}"
+								class="w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-base shadow-sm outline-none ring-blue-500 focus:ring-2"
+								required
+							/>
+							{% if form.title.errors %}
+								<p class="mt-2 text-sm text-red-600">{{ form.title.errors[0] }}</p>
+							{% endif %}
+						</div>
+						<button
+							type="submit"
+							class="inline-flex items-center justify-center rounded-md bg-blue-600 px-8 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						>
+							Add
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="mt-10">
+				<div class="mx-auto max-w-3xl divide-y divide-slate-200 border-t border-slate-200">
+					{% if not todos %}
+						<div class="py-10 text-center text-slate-500">No tasks yet.</div>
+					{% endif %}
+
+					{% for todo in todos %}
+						<div class="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
+							<div class="flex items-center gap-4">
+								<input
+									type="checkbox"
+									class="h-7 w-7 rounded border-slate-400 text-slate-900 focus:ring-slate-900"
+									{% if todo.completed %}checked{% endif %}
+									disabled
+								/>
+
+								<div class="min-w-0">
+									<p class="truncate text-xl font-medium {% if todo.completed %}text-slate-600 line-through{% endif %}">
+										{{ todo.title }}
+									</p>
+									{% if todo.completed %}
+										<p class="mt-1 text-base text-slate-400">Done</p>
+									{% endif %}
+								</div>
+							</div>
+
+							<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+								{% if not todo.completed %}
+									<form method="POST" action="{{ url_for('todo_bp.complete_todo', todo_id=todo.id) }}">
+										{{ form.hidden_tag() }}
+										<button
+											type="submit"
+											class="w-full rounded-md bg-green-600 px-10 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:w-auto"
+										>
+											Complete
+										</button>
+									</form>
+								{% endif %}
+
+								<form method="POST" action="{{ url_for('todo_bp.delete_todo', todo_id=todo.id) }}">
+									{{ form.hidden_tag() }}
+									<button
+										type="submit"
+										class="w-full rounded-md bg-red-600 px-10 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
+									>
+										Delete
+									</button>
+								</form>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
